@@ -19,11 +19,12 @@ fn main_result() -> Result<(), Error> {
 
     let _exe_name = args.next().unwrap();
 
-    let url = args.next().expect("Usage: <rpc_url> <username> <password>");
+    let url = args.next().expect("Usage: <rpc_url> <username> <password> <socks_proxy>");
     let user = args.next().expect("no user given");
     let pass = args.next().expect("no pass given");
+    let socks_proxy = args.next().expect("no socks proxy given");
 
-    let rpc = Client::new(url, Auth::UserPass(user, pass)).unwrap();
+    let rpc = Client::new(url, Auth::UserPass(user, pass), Some(socks_proxy)).unwrap();
 
     let _blockchain_info = rpc.get_blockchain_info()?;
 
