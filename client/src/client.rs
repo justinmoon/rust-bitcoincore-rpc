@@ -958,10 +958,10 @@ impl Client {
     /// Creates a client to a bitcoind JSON-RPC server.
     ///
     /// Can only return [Err] when using cookie authentication.
-    pub fn new(url: String, auth: Auth) -> Result<Self> {
+    pub fn new(url: String, auth: Auth, socks_proxy: Option<String>) -> Result<Self> {
         let (user, pass) = auth.get_user_pass()?;
         Ok(Client {
-            client: jsonrpc::client::Client::new(url, user, pass),
+            client: jsonrpc::client::Client::new(url, user, pass, socks_proxy),
         })
     }
 
