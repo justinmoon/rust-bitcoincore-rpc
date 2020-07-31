@@ -27,7 +27,7 @@ use std::collections::HashMap;
 use bitcoin::consensus::encode;
 use bitcoin::hashes::hex::{FromHex, ToHex};
 use bitcoin::util::{bip158, bip32};
-use bitcoin::{Address, Amount, SignedAmount, PrivateKey, PublicKey, Script, Transaction};
+use bitcoin::{Address, Amount, PrivateKey, PublicKey, Script, SignedAmount, Transaction};
 use serde::de::Error as SerdeError;
 use serde::{Deserialize, Serialize};
 
@@ -585,13 +585,13 @@ pub struct GetAddressInfoResultEmbedded {
     pub pubkey: Option<PublicKey>,
     #[serde(rename = "is_compressed")]
     pub is_compressed: Option<bool>,
-    pub label: Option<String>,
+    //pub label: Option<String>,
     #[serde(rename = "hdkeypath")]
     pub hd_key_path: Option<bip32::DerivationPath>,
     #[serde(rename = "hdseedid")]
     pub hd_seed_id: Option<bitcoin::XpubIdentifier>,
-    #[serde(default)]
-    pub labels: Vec<GetAddressInfoResultLabel>,
+    //#[serde(default)]
+    //pub labels: Vec<GetAddressInfoResultLabel>,
 }
 
 #[derive(Copy, Clone, PartialEq, Eq, Debug, Deserialize, Serialize)]
@@ -635,13 +635,13 @@ pub struct GetAddressInfoResult {
     pub embedded: Option<GetAddressInfoResultEmbedded>,
     #[serde(rename = "is_compressed")]
     pub is_compressed: Option<bool>,
-    pub label: String,
+    //pub label: String,
     pub timestamp: Option<u64>,
     #[serde(rename = "hdkeypath")]
     pub hd_key_path: Option<bip32::DerivationPath>,
     #[serde(rename = "hdseedid")]
     pub hd_seed_id: Option<bitcoin::XpubIdentifier>,
-    pub labels: Vec<GetAddressInfoResultLabel>,
+    //pub labels: Vec<GetAddressInfoResultLabel>,
 }
 
 /// Models the result of "getblockchaininfo"
@@ -822,12 +822,8 @@ impl serde::Serialize for ImportMultiRescanSince {
         S: serde::Serializer,
     {
         match *self {
-            ImportMultiRescanSince::Now => {
-                serializer.serialize_str("now")
-            }
-            ImportMultiRescanSince::Timestamp(timestamp) => {
-                serializer.serialize_u64(timestamp)
-            }
+            ImportMultiRescanSince::Now => serializer.serialize_str("now"),
+            ImportMultiRescanSince::Timestamp(timestamp) => serializer.serialize_u64(timestamp),
         }
     }
 }
